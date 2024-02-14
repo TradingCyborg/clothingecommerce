@@ -1,0 +1,11 @@
+flask-migrate
+flask
+sqlalchemy
+flask-sqlalchemy
+sqlalchemy.orm
+sqlalchemy-serializer
+faker
+flask-cors
+flask-jwt-extended
+flask-bcrypt
+gunicorn
