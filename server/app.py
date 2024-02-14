@@ -31,18 +31,15 @@ jwt = JWTManager(app)
 from views.customer_view import customer_bp
 from views.product_view import products_bp 
 from views.order_view import order_bp
-from views.payment_view import payment_bp
 from views.review_view import review_bp
-from views.favorite_view import favorite_bp
 from views.auth_view import auth_bp
 
-app.register_blueprint(favorite_bp,url_prefix='/https://african-products-e-commerce.onrender.com')
-app.register_blueprint(auth_bp,url_prefix='/https://african-products-e-commerce.onrender.com')
-app.register_blueprint(review_bp,url_prefix='/https://african-products-e-commerce.onrender.com')
-app.register_blueprint(order_bp,url_prefix='/https://african-products-e-commerce.onrender.com')
-app.register_blueprint(payment_bp,url_prefix='/https://african-products-e-commerce.onrender.com')
-app.register_blueprint(customer_bp,url_prefix='/https://african-products-e-commerce.onrender.com')
-app.register_blueprint(products_bp,url_prefix='/https://african-products-e-commerce.onrender.com')
+
+app.register_blueprint(auth_bp, url_prefix='')
+app.register_blueprint(review_bp, url_prefix='')
+app.register_blueprint(order_bp, url_prefix='')
+app.register_blueprint(customer_bp, url_prefix='')
+app.register_blueprint(products_bp, url_prefix='')
 
 # Run the app
 if __name__ == '__main__':

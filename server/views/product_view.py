@@ -38,7 +38,7 @@ def get_products():
                     'price':product.price,
                     'description':product.description,
                     'category':product.category,
-                    'quantity':product.quantity,
+                    'size':product.size,
                     'image_url':product.imageUrl,
                     'reviews':[get_review(product.id)]
                 }
@@ -57,8 +57,8 @@ def get_one_product(id):
             'name':product.name,
             'price':product.price,
             'description':product.description,
+            'size':product.size,
             'category':product.category,
-            'quantity':product.quantity,
             'imageUrl':product.imageUrl
         })
     else:
@@ -76,10 +76,10 @@ def add_a_product():
         price =data['price']
         description =data['description']
         category =data['category']
-        quantity =data['quantity']
+        size =data['size']
         imageUrl =data['imageUrl']
         
-        new_product=Product(name=name,price=price,description=description,category=category,quantity=quantity,imageUrl=imageUrl)
+        new_product=Product(name=name,price=price,description=description,category=category,size=size,imageUrl=imageUrl)
         
         db.session.add(new_product)
         db.session.commit()
@@ -113,7 +113,7 @@ def modify_product(id):
                 product.price = data.get('price',product.price)
                 product.description=data.get('description',product.description)
                 product.category=data.get('category',product.category)
-                product.quantity=data.get('quantity',product.quantity)
+                product.size=data.get('size',product.size)
                 product.imageUrl=data.get('imageUrl',product.imageUrl)
                 
                 db.session.commit()
@@ -142,7 +142,7 @@ def get_products_by_category(category):
                     'price': product.price,
                     'description': product.description,
                     'category': product.category,
-                    'quantity': product.quantity,
+                    'size': product.size,
                     'image_url': product.imageUrl,
                     'reviews': [get_review(product.id)]
                 }

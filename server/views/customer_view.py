@@ -1,9 +1,8 @@
-         
-            
+   
 from flask import Blueprint, jsonify, request
 from models import Customer, db
 from flask_jwt_extended import jwt_required
-from flask_bcrypt import generate_password_hash
+
 
 
 # from flask_jwt_extended import  jwt_required
@@ -21,8 +20,7 @@ def get_customers():
         for customer in customers:
             customers_list.append({
                 "id": customer.id,
-                'firstname': customer.firstname,
-                'lastname': customer.lastname,
+                'name': customer.name,
                 'email': customer.email,
                 'phone': customer.phone,
                 'address': customer.address,
@@ -39,11 +37,10 @@ def get_customers():
 def create_customer():
     data = request.get_json()
     if data:
-        if 'firstname' not in data or 'lastname' not in data or 'email' not in data or 'phone' not in data or 'password' not in data or 'address' not in data:
+        if 'name' not in data or 'email' not in data or 'phone' not in data or 'password' not in data or 'address' not in data:
             return jsonify({'error': 'All fields are required'}), 400
 
-        firstname = data['firstname']
-        lastname = data['lastname']
+        name = data['name']
         email = data['email']
         phone = data['phone']
         password = data['password']
@@ -53,8 +50,7 @@ def create_customer():
         hashed_password = generate_password_hash(password)
 
         new_customer = Customer(
-            firstname=firstname,
-            lastname=lastname,
+            name=name,
             email=email,
             phone=phone,
             password=hashed_password,
@@ -75,8 +71,7 @@ def get_single_customer(id):
     if customer:
         return jsonify({
             "id":customer.id,
-            'firstname':customer.firstname,
-            'lastname':customer.lastname,
+            'name':customer.name,
             'email':customer.email,
             'phone':customer.phone,
             'address':customer.address,
@@ -102,8 +97,7 @@ def modify_customer(id):
         elif request.method == 'PATCH':
             data=request.form
             
-            customer.firstname=data.get('firstname',customer.firstname)
-            customer.lastname = data.get('lastname',customer.lastname)
+            customer.name=data.get('name',customer.name)
             customer.email=data.get('email',customer.email)
             customer.phone=data.get('phone',customer.phone)
             customer.address=data.get('address',customer.address)
