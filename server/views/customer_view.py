@@ -1,113 +1,118 @@
-   
-from flask import Blueprint, jsonify, request
-from models import Customer, db
-from flask_jwt_extended import jwt_required
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import validates
+from sqlalchemy_serializer import SerializerMixin
 
+db = SQLAlchemy()
 
+class Customer(db.Model, SerializerMixin):
+    __tablename__ = 'customers'
 
-# from flask_jwt_extended import  jwt_required
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(70), unique=True, nullable=False)
+    phone = db.Column(db.String(14), unique=True)
+    password = db.Column(db.String(450), nullable=False)
+    address = db.Column(db.String(70), nullable=False)
+    created_at = db.Column(db.DateTime(), server_default=db.func.now())
+    updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
 
+    carts = db.relationship("Cart", backref="customer", lazy=True)
+    reviews = db.relationship("Review", backref="customer", lazy=True)
+    profile = db.relationship("Profile", uselist=False, backref="customer", lazy=True)  # One-to-One relationship
 
+    def __repr__(self):
+        return f'<Customer Item {self.name}>'
 
-customer_bp=Blueprint('customerview',__name__)
+    @validates("name")
+    def validate_names(self, key, name):
+        if not name:
+            raise ValueError('Name Field is required')
+        return name
 
-@customer_bp.route('/customers')
-def get_customers():
-    """Returns a list of all customers"""
-    customers = Customer.query.all()
-    customers_list = []
-    if customers:
-        for customer in customers:
-            customers_list.append({
-                "id": customer.id,
-                'name': customer.name,
-                'email': customer.email,
-                'phone': customer.phone,
-                'address': customer.address,
-                'created_at': customer.created_at,
-                # Do not return the password in the response
-                # 'password': customer.password
-            })
-        return (customers_list, 200)
-    else:
-        return jsonify({'message': "No customer found😞"}), 200
+    @validates("email")
+    def validate_email(self, key, value):
+        if '@' not in value:
+            raise ValueError('Please enter a valid email')
+        return value
 
+class Profile(db.Model):
+    __tablename__ = 'profiles'
 
-@customer_bp.route('/customers', methods=['POST'])
-def create_customer():
-    data = request.get_json()
-    if data:
-        if 'name' not in data or 'email' not in data or 'phone' not in data or 'password' not in data or 'address' not in data:
-            return jsonify({'error': 'All fields are required'}), 400
+    id = db.Column(db.Integer, primary_key=True)
+    bio = db.Column(db.Text)
+    image_url = db.Column(db.String(255))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'), unique=True)
 
-        name = data['name']
-        email = data['email']
-        phone = data['phone']
-        password = data['password']
-        address = data['address']
+    def __repr__(self):
+        return f'<Profile for Customer {self.customer_id}>'
 
-        # Hash the password before storing it
-        hashed_password = generate_password_hash(password)
+class Category(db.Model):
+    __tablename__ = 'categories'
 
-        new_customer = Customer(
-            name=name,
-            email=email,
-            phone=phone,
-            password=hashed_password,
-            address=address
-        )
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
 
-        db.session.add(new_customer)
-        db.session.commit()
-        return jsonify({'message': 'User created successfully😉'})
-    else:
-        return jsonify({'error': 'Enter user information❗'})
+    products = db.relationship("Product", backref="category", lazy=True)
 
-@customer_bp.route('/customers/<int:id>')
-def get_single_customer(id):
-    
-    customer=Customer.query.filter_by(id=id).first()
-    
-    if customer:
-        return jsonify({
-            "id":customer.id,
-            'name':customer.name,
-            'email':customer.email,
-            'phone':customer.phone,
-            'address':customer.address,
-            'created_at':customer.created_at,
-            # Do not return the password in the response
-            # 'password': customer.password
-        })
-    else:
-        return jsonify({'message':'User does not exist❗'})
+    def __repr__(self):
+        return f'<Category {self.name}>'
 
+class Product(db.Model, SerializerMixin):
+    __tablename__ = 'products'
 
-@customer_bp.route('/customers/<int:id>',methods=["PUT",'DELETE','PATCH'])
-@jwt_required()
-def modify_customer(id):
-    customer= Customer.query.filter_by(id=id).first()
-    
-    if customer:
-        
-        if request.method == 'DELETE':
-            db.session.delete(customer)
-            db.session.commit()
-            
-        elif request.method == 'PATCH':
-            data=request.form
-            
-            customer.name=data.get('name',customer.name)
-            customer.email=data.get('email',customer.email)
-            customer.phone=data.get('phone',customer.phone)
-            customer.address=data.get('address',customer.address)
-            # Do not update the password through PATCH request
-            # customer.password=data.get('password',customer.password)
-            
-            db.session.commit()
-            return jsonify({"message":"The customer has been updated!"}),201
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(85), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+    imageUrl = db.Column(db.Text, nullable=False)
+    size = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime(), server_default=db.func.now())
+    updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
 
-    else:  
-        return jsonify({
-            'message':' Customer not found'
-    })
+    category = db.relationship("Category", backref="products", lazy=True)
+
+    carts = db.relationship("Cart", backref="product", lazy=True, secondary="cart_product_association")  # Many-to-Many relationship
+    reviews = db.relationship("Review", backref="product", lazy=True)
+
+    def __repr__(self):
+        return f'<Item {self.name}, {self.price}, {self.description}, {self.category.name}, {self.imageUrl}, {self.size}>'
+
+class Cart(db.Model):
+    __tablename__ = 'carts'
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime(), server_default=db.func.now())
+    updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+    total_price = db.Column(db.Float, nullable=False)
+    delivery_address = db.Column(db.String(100))
+
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'), nullable=False)
+
+    products = db.relationship("Product", backref="cart", lazy=True, secondary="cart_product_association")  # Many-to-Many relationship
+
+    def __repr__(self):
+        return f'<Cart for Customer {self.customer_id}>'
+
+class Review(db.Model, SerializerMixin):
+    __tablename__ = 'reviews'
+
+    id = db.Column(db.Integer, primary_key=True)
+    rating = db.Column(db.Integer, nullable=False)
+    comment = db.Column(db.Text, nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime(), server_default=db.func.now())
+    updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
+
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+
+    customer = db.relationship("Customer", backref=db.backref('reviews', lazy=True), cascade="all, delete-orphan", single_parent=True)
+    product = db.relationship("Product", backref=db.backref('reviews', lazy=True), cascade="all, delete-orphan", single_parent=True)
+
+    @validates("rating")
+    def validate_rating(self, key, value):
+        if value < 0 or value > 6:
+            raise ValueError('Please provide a value between 0 and 6')
+        return value
