@@ -5,6 +5,10 @@ from flask_cors import CORS
 from datetime import timedelta
 from flask_jwt_extended import JWTManager
 from models import db  # Import your db instance
+from views.product_view import products_bp
+from views.order_view import order_bp
+from views.review_view import review_bp
+from views.cart_view import cart_bp  # Uncomment this line to import cart_bp
 
 # Create the Flask app
 app = Flask(__name__)
@@ -28,18 +32,10 @@ CORS(app)
 jwt = JWTManager(app)
 
 # Import and register your blueprints
-from views.customer_view import customer_bp
-from views.product_view import products_bp 
-from views.order_view import order_bp
-from views.review_view import review_bp
-from views.auth_view import auth_bp
-
-
-app.register_blueprint(auth_bp, url_prefix='')
-app.register_blueprint(review_bp, url_prefix='')
-app.register_blueprint(order_bp, url_prefix='')
-app.register_blueprint(customer_bp, url_prefix='')
-app.register_blueprint(products_bp, url_prefix='')
+app.register_blueprint(review_bp, url_prefix='/reviews')
+app.register_blueprint(order_bp, url_prefix='/orders')
+app.register_blueprint(products_bp, url_prefix='/products')
+app.register_blueprint(cart_bp, url_prefix='/cart')
 
 # Run the app
 if __name__ == '__main__':

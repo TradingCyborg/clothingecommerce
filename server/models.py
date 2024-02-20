@@ -4,6 +4,14 @@ from sqlalchemy_serializer import SerializerMixin
 
 db = SQLAlchemy()
 
+# Define the many-to-many association table
+cart_product_association = db.Table(
+    'cart_product_association',
+    db.Column('cart_id', db.Integer, db.ForeignKey('carts.id')),
+    db.Column('product_id', db.Integer, db.ForeignKey('products.id')),
+    db.UniqueConstraint('cart_id', 'product_id', name='uq_cart_product')
+)
+
 class Customer(db.Model, SerializerMixin):
     __tablename__ = 'customers'
 
@@ -17,23 +25,11 @@ class Customer(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
 
     carts = db.relationship("Cart", backref="customer", lazy=True)
-    reviews = db.relationship("Review", backref="customer", lazy=True)
-    profile = db.relationship("Profile", uselist=False, backref="customer", lazy=True)  # One-to-One relationship
+    reviews = db.relationship("Review", backref="customer_reviews", lazy=True)
+    profile = db.relationship("Profile", uselist=False, backref="customer", lazy=True)
 
     def __repr__(self):
         return f'<Customer Item {self.name}>'
-
-    @validates("name")
-    def validate_names(self, key, name):
-        if not name:
-            raise ValueError('Name Field is required')
-        return name
-
-    @validates("email")
-    def validate_email(self, key, value):
-        if '@' not in value:
-            raise ValueError('Please enter a valid email')
-        return value
 
 class Profile(db.Model):
     __tablename__ = 'profiles'
@@ -52,7 +48,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
 
-    products = db.relationship("Product", backref="category", lazy=True)
+    products = db.relationship('Product', back_populates='category')
 
     def __repr__(self):
         return f'<Category {self.name}>'
@@ -70,10 +66,10 @@ class Product(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime(), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
 
-    category = db.relationship("Category", backref="products", lazy=True)
+    category = db.relationship('Category', back_populates='products')
 
-    carts = db.relationship("Cart", backref="product", lazy=True, secondary="cart_product_association")  # Many-to-Many relationship
-    reviews = db.relationship("Review", backref="product", lazy=True)
+    carts = db.relationship("Cart", backref="product", lazy=True, secondary=cart_product_association)
+    reviews = db.relationship("Review", backref="product_reviews", lazy=True)
 
     def __repr__(self):
         return f'<Item {self.name}, {self.price}, {self.description}, {self.category.name}, {self.imageUrl}, {self.size}>'
@@ -90,10 +86,24 @@ class Cart(db.Model):
 
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'), nullable=False)
 
-    products = db.relationship("Product", backref="cart", lazy=True, secondary="cart_product_association")  # Many-to-Many relationship
+    products = db.relationship("Product", backref="cart", lazy=True, secondary=cart_product_association)
 
     def __repr__(self):
         return f'<Cart for Customer {self.customer_id}>'
+
+class Order(db.Model, SerializerMixin):
+    __tablename__ = 'orders'
+
+    id = db.Column(db.Integer, primary_key=True)
+    orderdate = db.Column(db.DateTime(), server_default=db.func.now())
+    price = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.String(50), nullable=False)
+    updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
+    customer_id = db.Column(db.Integer(), db.ForeignKey('customers.id'))
+    product_id = db.Column(db.Integer(), db.ForeignKey('products.id'))
+
+    customer = db.relationship("Customer", backref=db.backref('orders', lazy=True))
+    order_products = db.relationship("Product", backref=db.backref('order', lazy=True), cascade="all, delete")
 
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
@@ -108,11 +118,12 @@ class Review(db.Model, SerializerMixin):
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
 
-    customer = db.relationship("Customer", backref=db.backref('reviews', lazy=True), cascade="all, delete-orphan", single_parent=True)
-    product = db.relationship("Product", backref=db.backref('reviews', lazy=True), cascade="all, delete-orphan", single_parent=True)
-
     @validates("rating")
     def validate_rating(self, key, value):
-        if value < 0 or value > 6:
-            raise ValueError('Please provide a value between 0 and 6')
+        # Modify the validation logic based on your requirements
+        if value < 0 or value > 5:
+            raise ValueError('Please provide a value between 0 and 5')
         return value
+
+    customer = db.relationship("Customer", backref="customer_reviews", lazy=True, cascade="all, delete-orphan", single_parent=True)
+    product = db.relationship("Product", backref="reviews_product", lazy=True, cascade="all, delete-orphan", single_parent=True)
