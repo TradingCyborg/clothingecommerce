@@ -1,5 +1,5 @@
 {
-    "items": [
+    "products": [
       {
         "id": 1,
         "name": "Men's Casual Shirt",
@@ -78,7 +78,7 @@
         "name": "Leather Biker Jacket",
         "price": 9000,
         "description": "Style: Biker, Color: Black, Gender: For Him, Material: Leather",
-        "category": "Men's",
+        "category": "Men",
         "size": "L",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzCbWjYae0PJ-9-BNahcQKqhKN0SyFujCZv_d-Go1k9g&s"
       },
@@ -96,7 +96,7 @@
         "name": "Women's Elegant Dress",
         "price": 6500,
         "description": "Style: Elegant, Color: Red, Gender: For Her, Material: Silk",
-        "category": "Women's",
+        "category": "Women",
         "size": "M",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKgjIJZ_072LNneEVDbXkQsBldC3JmuZXMbg&usqp=CAU"
       },
@@ -105,7 +105,7 @@
         "name": "Women's Casual Blouse",
         "price": 4200,
         "description": "Style: Casual, Color: White/Blue , Gender: For Her, Material: Cotton",
-        "category": "Women's",
+        "category": "Women",
         "size": "S",
         "image_url": "https://img.fruugo.com/product/5/13/705973135_max.jpg"
       },
@@ -114,7 +114,7 @@
         "name": "Women's Skinny Jeans",
         "price": 4800,
         "description": "Style: Skinny, Color: Blue, Gender: For Her, Material: Denim",
-        "category": "Women's",
+        "category": "Women",
         "size": "L",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7yo8mIHmolcaIqFnimBosyMhS-y096pWqpQ&usqp=CAU"
       },
@@ -123,7 +123,7 @@
         "name": "Women's Athletic Leggings",
         "price": 3500,
         "description": "Style: Athletic, Color: Blue, Gender: For Her, Material: Spandex",
-        "category": "Women's",
+        "category": "Women",
         "size": "L",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjny-kMign4KOWPWb3tYaF8NG_oVAxDIdU5A&usqp=CAU"
       },
@@ -132,7 +132,7 @@
         "name": "Women's Floral Print Skirt",
         "price": 5500,
         "description": "Style: Floral, Color: Pink, Gender: For Her, Material: Polyester",
-        "category": "Women's",
+        "category": "Women",
         "size": "L",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR7FP8eFKm0oPLg3Xc24kq0ApVEM4FgDoS5g&usqp=CAU"
       },
@@ -141,7 +141,7 @@
         "name": "Women's Classic Trench Coat",
         "price": 7800,
         "description": "Style: Classic, Color: Beige, Gender: For Her, Material: Wool",
-        "category": "Women's",
+        "category": "Women",
         "size": "XL",
         "image_url": "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/65/269247/1.jpg?0773"
       },
@@ -150,7 +150,7 @@
         "name": "Women's Boho Maxi Dress",
         "price": 6000,
         "description": "Style: Boho, Color: Green, Gender: For Her, Material: Chiffon",
-        "category": "Women's",
+        "category": "Women",
         "size": "S",
         "image_url": "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/05/7570841/1.jpg?8863"
       },
@@ -159,7 +159,7 @@
         "name": "Women's Winter Sweater",
         "price": 4800,
         "description": "Style: Winter, Color: Gray, Gender: For Her, Material: Wool",
-        "category": "Women's",
+        "category": "Women",
         "size": "M",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK7ZygJ55dJwGxYZdv9Midt2qMPx2iFd5cSw&usqp=CAU"
       },
@@ -168,7 +168,7 @@
         "name": "Women's High Heel Shoes",
         "price": 5500,
         "description": "Style: High Heel, Color: Black, Gender: For Her, Material: Leather",
-        "category": "Women's",
+        "category": "Women",
         "size": "US 8",
         "image_url": "https://files.sophie.co.ke/2023/02/platform-heels-chunky-block-high-heel-pu_main-5_1786.jpg"
       },
@@ -177,99 +177,75 @@
         "name": "Women's Denim Jacket",
         "price": 5200,
         "description": "Style: Denim, Color: Blue, Gender: For Her, Material: Denim",
-        "category": "Women's",
+        "category": "Women",
         "size": "L",
         "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKkTBp7A3at1g2Pwor-McL5p1SswDal4B0yQ&usqp=CAU"
       },
-      {
-        "id": 21,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      },
-      {
-        "id": 22,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      },
-      {
-        "id": 23,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      },
-      {
-        "id": 24,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      },
-      {
-        "id": 25,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      },
-      {
-        "id": 26,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      },
-      {
-        "id": 27,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      },
-      {
-        "id": 28,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      },
-      {
-        "id": 29,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      },
-      {
-        "id": 30,
-        "name": "Men's Casual Shirt",
-        "price": 5500,
-        "description": "Fit: Casual, Color: Blue, Gender: For Him, Material: Cotton",
-        "category": "Men's",
-        "size": "XL",
-        "image_url": "https://example.com/mens-casual-shirt.jpg"
-      }
-    ]
-    }
+
+        {
+          "id": 21,
+          "name": "Kids' Playful T-Shirt",
+          "price": 2500,
+          "description": "Style: Playful, Color: Blue, Gender: Unisex, Material: Cotton",
+          "category": "Kids",
+          "size": "S",
+          "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb91QBjCd2MT8FY6BnWqJHeCjWgTv63ZhorA&usqp=CAU"
+        },
+        {
+          "id": 22,
+          "name": "Kids' Cartoon Print Dress",
+          "price": 3200,
+          "description": "Style: Cartoon Print, Color: Pink, Gender: Girls, Material: Cotton",
+          "category": "Kids",
+          "size": "M",
+          "image_url": "https://m.media-amazon.com/images/I/71almVBX18L._AC_UF894,1000_QL80_.jpg"
+        },
+        {
+          "id": 23,
+          "name": "Boys' Adventure Hoodie",
+          "price": 2900,
+          "description": "Style: Adventure, Color: Blue, Gender: Boys, Material: Fleece",
+          "category": "Kids",
+          "size": "L",
+          "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZjeKsApGHa2j0AxeEdEU-8sqFDG0sRc4CJg&usqp=CAU"
+        },
+        {
+          "id": 24,
+          "name": "Girls' Floral Skirt",
+          "price": 1800,
+          "description": "Style: Floral, Color: Yellow, Gender: Girls, Material: Polyester",
+          "category": "Kids",
+          "size": "S",
+          "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJwqbtF7eBEf4C2ZU0pX4xWPE3QeEzXppUmQ&usqp=CAU"
+        },
+        {
+          "id": 25,
+          "name": "Toddlers' Cute Onesie",
+          "price": 2200,
+          "description": "Style: Cute, Color: Green, Gender: Unisex, Material: Cotton",
+          "category": "Kids",
+          "size": "12-18 months",
+          "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF9wxCtbTgFjG6O2NPzeQv8zBz9HM3Q9dCFw&usqp=CAU"
+        },
+        {
+          "id": 26,
+          "name": "Kids' Sporty Shorts",
+          "price": 1700,
+          "description": "Style: Sporty, Color: Blue, Material: Nylon",
+          "category": "Kids",
+          "size": "M",
+          "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6yAlnMW6HJmb3ipWi87RN38IrLCC-v_Rxeg&usqp=CAU"
+        },
+        {
+          "id": 27,
+          "name": "Boys' Dinosaur Pajamas",
+          "price": 2500,
+          "description": "Style: Dinosaur, Color: Grey, Gender: Boys, Material: Cotton",
+          "category": "Kids",
+          "size": "L",
+          "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJeDZFpwl0m0fqVt9ummo21CPXbe_Zlenmjw&usqp=CAU"
+        }
+
+      ]
+      
+ }
