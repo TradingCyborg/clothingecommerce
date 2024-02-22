@@ -1,7 +1,17 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Landing() {
-    const backgroundImageUrl = "https://www.shutterstock.com/image-photo/clothing-store-retail-blurry-photo-600nw-2236736269.jpg"; // Replace with your image URL
+  const backgroundImageUrl = "https://www.shutterstock.com/image-photo/clothing-store-retail-blurry-photo-600nw-2236736269.jpg"; // Replace with your image URL
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  const handleSignupClick = () => {
+    navigate("/signup");
+  };
 
     return (
         <div className="Landing" style={{ 
@@ -15,8 +25,8 @@ export default function Landing() {
             backgroundPosition: "center"  // Adjust as needed
         }}>
               <div style={{ color: "black" }}> {/* Set the text color to yellow */}
-                <h1>Welcome to Fenty Wear Store</h1>
-                <p>Elevate Your Wardrobe with Every Click</p>
+                <h1>Welcome to Our FentyWear Store</h1>
+                <p>Discover a world of amazing products at your fingertips</p>
                 {/* Add any additional content or components here */}
             </div>
         </div>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -11,19 +10,19 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-4 mb-4">
             <h4>Contact Us</h4>
-            <p>Email: info@example.com</p>
-            <p>Phone: +123 456 7890</p>
+            <p>Email: info@fentywearke.com</p>
+            <p>Phone: +254711223344</p>
           </div>
           <div className="col-md-4 mb-4">
             <h4>Follow Us</h4>
             <div className="social-icons">
-              <a href="/" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faFacebook} size="2x" />
               </a>
-              <a href="/" target="_blank" rel="noopener noreferrer">
+              <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faTwitter} size="2x" />
               </a>
-              <a href="/" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faInstagram} size="2x" />
               </a>
             </div>
@@ -34,7 +33,7 @@ const Footer = () => {
             <form>
               <div className="input-group">
                 <input type="email" className="form-control" placeholder="Your email" />
-                <button type="submit" className="btn btn-outline-light">
+                <button type="submit" className="btn btn-outline-dark">
                   Subscribe
                 </button>
               </div>
@@ -52,4 +51,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
