@@ -1,12 +1,32 @@
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import validates
+from flask_migrate import Migrate
+from datetime import timedelta
+from sqlalchemy_serializer import SerializerMixin
+
 
 db = SQLAlchemy()
+migrate = Migrate()
 
-# One-to-One Relationship
-class UserProfile(db.Model):
-    __tablename__ = 'user_profiles'
+def create_app():
+    # Create the Flask app
+    app = Flask(__name__)
 
+    # Configure the app
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["JWT_SECRET_KEY"] = "wsddf542455r5rdd55d579j8f6f8yfrd57tru"
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+
+    # Initialize SQLAlchemy with the app
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+    return app, db
+
+
+class Customer(db.Model):
+    __tablename__ = 'customers'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(70), unique=True, nullable=False)
@@ -15,82 +35,78 @@ class UserProfile(db.Model):
     address = db.Column(db.String(70), nullable=False)
     created_at = db.Column(db.DateTime(), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
+    carts = db.relationship('Cart', back_populates='customer')
 
-    def __repr__(self):
-        return f'<Customer Item {self.name}>'
-    
-    @validates("name")
-    def validate_names(self, key, name):
-        if not name:
-            raise ValueError('Name Field is required')
-        return name
-    
-    @validates("email")
-    def validate_email(self, key, value):
-        if '@' not in value:
-            raise ValueError('Please enter a valid email')
-        return value
-    
-
-class TokenBlocklist(db.Model):
+class Profile(db.Model):
+    __tablename__ = 'profiles'
     id = db.Column(db.Integer, primary_key=True)
-    jti =  db.Column(db.String(100), nullable=True)
-    created_at = db.Column(db.DateTime(), server_default=db.func.now())
+    bio = db.Column(db.Text)
+    image_url = db.Column(db.String(255))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'), unique=True)
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    products = db.relationship('Product', back_populates='category')
 
 
-class Product(db.Model, SerializerMixin):
+class Product(db.Model):
     __tablename__ = 'products'
-
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text)
+    name = db.Column(db.String(85), nullable=False)
+    description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
-    category = db.Column(db.String(85), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     imageUrl = db.Column(db.Text, nullable=False)
     size = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime(), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
+    category = db.relationship('Category', back_populates='products')
 
-    def __repr__(self):
-        return f'<Item {self.name}, {self.price}, {self.description}, {self.category}, {self.imageUrl}, {self.size}>'
-    
-    
 
+class Cart(db.Model):
+    __tablename__ = 'carts'
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime(), server_default=db.func.now())
+    updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+    total_price = db.Column(db.Float, nullable=False)
+    delivery_address = db.Column(db.String(100))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'), nullable=False)
+    customer = db.relationship('Customer', back_populates='carts')
 
 class Order(db.Model, SerializerMixin):
     __tablename__ = 'orders'
-
     id = db.Column(db.Integer, primary_key=True)
     orderdate = db.Column(db.DateTime(), server_default=db.func.now())
     price = db.Column(db.Float, nullable=False)
+    status = db.Column(db.String(50), nullable=False)
     updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
-    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
-
+    customer_id = db.Column(db.Integer(), db.ForeignKey('customers.id'))
+    product_id = db.Column(db.Integer(), db.ForeignKey('products.id'))
     customer = db.relationship("Customer", backref=db.backref('orders', lazy=True))
-    product = db.relationship("Product", backref=db.backref('order', lazy=True), cascade="all, delete")
+    product = db.relationship("Product", backref=db.backref('orders', lazy=True))
 
-    
-class Review(db.Model, SerializerMixin):
+
+class Review(db.Model):
     __tablename__ = 'reviews'
-
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.Text, nullable=False)
-    date = db.Column(db.DateTime, default=db.func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    date = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime(), server_default=db.func.now())
+    updated_at = db.Column(db.DateTime(), onupdate=db.func.now())
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    customer = db.relationship("Customer", backref="customer_reviews", lazy=True, cascade="all, delete-orphan", single_parent=True)
+    product = db.relationship("Product", backref="reviews_product", lazy=True, cascade="all, delete-orphan", single_parent=True)
 
-    customer = db.relationship("Customer", backref=db.backref('reviews', lazy=True), cascade="all, delete-orphan", single_parent=True)
-    product = db.relationship("Product", backref=db.backref('reviews', lazy=True), cascade="all, delete-orphan", single_parent=True)
-
-
-    @validates("rating")
-    def validate_rating(self, key, value):
-        if value < 0 or value > 6:
-            raise ValueError('Please provide a value between 0 and 6')
-        return value
-
-
-
-
+# Define the many-to-many association table
+cart_product_association = db.Table(
+    'cart_product_association',
+    db.Column('cart_id', db.Integer, db.ForeignKey('carts.id')),
+    db.Column('product_id', db.Integer, db.ForeignKey('products.id')),
+    db.UniqueConstraint('cart_id', 'product_id', name='uq_cart_product')
+)

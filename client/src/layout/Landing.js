@@ -15,8 +15,8 @@ export default function Landing() {
             backgroundPosition: "center"  // Adjust as needed
         }}>
               <div style={{ color: "black" }}> {/* Set the text color to yellow */}
-                <h1>Welcome to Our FentyWear Store</h1>
-                <p>Discover a world of amazing products at your fingertips</p>
+                <h1>Welcome to Fenty Wear Store</h1>
+                <p>Elevate Your Wardrobe with Every Click</p>
                 {/* Add any additional content or components here */}
             </div>
         </div>
