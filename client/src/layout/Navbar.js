@@ -35,11 +35,14 @@
 //                 Cart
 //               </a>
 //             </li>
+<<<<<<< HEAD
 //             <li className="nav-item">
 //               <a className="nav-link" href="/cartegory">
 //                 cartegory
 //               </a>
 //             </li>
+=======
+>>>>>>> 01fc9cf (Logo added)
 //           </ul>
 //           <form className="d-flex">
 //             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -55,13 +58,24 @@
 
 // export default Navbar;
 
+<<<<<<< HEAD
+=======
+
+import React from "react";
+>>>>>>> 01fc9cf (Logo added)
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container-fluid">
+<<<<<<< HEAD
         <div className="navbar-brand">
           <img src="https://api.logo.com/api/v2/images?logo=logo_29bd977c-eb97-4e63-a6b2-4579403a7a01&u=1708550256&width=500&height=400&fit=contain&margins=100&format=webp&quality=60" alt="logo" width="120" height="90"/>
         </div>
+=======
+        <a className="navbar-brand" href="/">
+          <img src="https://api.logo.com/api/v2/images?logo=logo_29bd977c-eb97-4e63-a6b2-4579403a7a01&u=1708550256&width=500&height=400&fit=contain&margins=100&format=webp&quality=60" alt="Fenty wear logo"style={{ width: '100px', height: 'auto' }} />
+        </a>
+>>>>>>> 01fc9cf (Logo added)
         <button
           className="navbar-toggler"
           type="button"
