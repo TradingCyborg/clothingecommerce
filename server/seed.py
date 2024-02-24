@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from app import app
 from models import db, Customer, Profile, Category, Product, Cart, Order, Review
 from datetime import datetime
@@ -41,3 +42,48 @@ if __name__ == '__main__':
     with app.app_context():
         create_sample_data()
         print('Sample data added successfully!')
+=======
+from app import app, db
+from datetime import datetime
+from models import Product, Category, Order, Customer, User, Review, product_order_association
+
+def create_sample_data():
+    category_names = ['Shirts', 'Pants']
+    for name in category_names:
+        category = Category.query.filter_by(name=name).first()
+        if category is None:
+            category = Category(name=name)
+            db.session.add(category)
+
+    # Get the categories again to ensure we have the objects with IDs
+    categories = Category.query.all()
+
+    product1 = Product(name='Red T-Shirt', description='A simple red t-shirt', price=19.99, category=categories[0], imageUrl='https://example.com/image1.jpg', stock_quantity=10)
+    product2 = Product(name='Blue Jeans', description='A pair of blue jeans', price=29.99, category=categories[1], imageUrl='https://example.com/image2.jpg', stock_quantity=20)
+    db.session.add(product1)
+    db.session.add(product2)
+    db.session.commit()
+
+    # Create and add sample customers to the database
+    customer1 = Customer(name='John Doe', email='john.doe@example.com', phone='123-456-7890', address='123 Main St')
+    customer1.password = 'password123'
+    customer2 = Customer(name='Jane Doe', email='jane.doe@example.com', phone='123-456-7891', address='456 Elm St')
+    customer2.password = 'password123'
+    db.session.add(customer1)
+    db.session.add(customer2)
+    db.session.commit()
+
+    # Create and add sample orders to the database
+    order1 = Order(order_date=datetime.now(), total_price=59.98, customer_id=customer1.id)
+    order2 = Order(order_date=datetime.now(), total_price=39.98, customer_id=customer2.id)
+    db.session.add(order1)
+    db.session.add(order2)
+    db.session.commit()
+
+    print('Sample data created successfully.')
+
+
+if __name__ == '__main__':
+    with app.app_context():
+        create_sample_data()
+>>>>>>> 602a5ef (Authentication added)
