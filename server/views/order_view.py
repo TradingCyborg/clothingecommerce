@@ -49,7 +49,7 @@ def get_order(order_id):
 
 # Delete order
 @order_bp.route('/orders/<int:order_id>', methods=['DELETE'])
-# @jwt_required
+@jwt_required()
 def delete_order(order_id):
     order = Order.query.get(order_id)
     if order:
@@ -58,13 +58,10 @@ def delete_order(order_id):
         return jsonify({"Success": "Deleted successfully"}), 200
     else:
         return jsonify({"Error": "Order not found"}), 404
-    
-    
 
 # Update an order
 @order_bp.route('/orders/<int:order_id>', methods=['PUT'])
-
-# @jwt_required
+@jwt_required()
 def update_order(order_id):
     order = Order.query.get(order_id)
 
@@ -106,7 +103,6 @@ def get_orders_by_user(user_id):
         return jsonify({'orders': result})
     else:
         return jsonify({"error": "No order found for the given user ID!"}), 404
-
 
 # Fetch all orders by product
 @order_bp.route('/orders/by-product/<int:product_id>', methods=['GET'])

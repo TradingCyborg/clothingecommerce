@@ -35,6 +35,14 @@
 //                 Cart
 //               </a>
 //             </li>
+<<<<<<< HEAD
+=======
+//             <li className="nav-item">
+//               <a className="nav-link" href="/cartegory">
+//                 cartegory
+//               </a>
+//             </li>
+>>>>>>> a818faa4f8e0cbb089bfa8e42251b5de80bf3baa
 //           </ul>
 //           <form className="d-flex">
 //             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -50,16 +58,24 @@
 
 // export default Navbar;
 
+<<<<<<< HEAD
 
 import React from "react";
+=======
+>>>>>>> a818faa4f8e0cbb089bfa8e42251b5de80bf3baa
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        
       <div className="container-fluid">
+<<<<<<< HEAD
         <a className="navbar-brand" href="/">
           <img src="https://api.logo.com/api/v2/images?logo=logo_29bd977c-eb97-4e63-a6b2-4579403a7a01&u=1708550256&width=500&height=400&fit=contain&margins=100&format=webp&quality=60" alt="Fenty wear logo"style={{ width: '100px', height: 'auto' }} />
         </a>
+=======
+        <div className="navbar-brand">
+          <img src="https://api.logo.com/api/v2/images?logo=logo_29bd977c-eb97-4e63-a6b2-4579403a7a01&u=1708550256&width=500&height=400&fit=contain&margins=100&format=webp&quality=60" alt="logo" width="120" height="90"/>
+        </div>
+>>>>>>> a818faa4f8e0cbb089bfa8e42251b5de80bf3baa
         <button
           className="navbar-toggler"
           type="button"
@@ -86,6 +102,11 @@ const Navbar = () => {
             <li className="nav-item">
               <a className="nav-link" href="/cart">
                 Cart
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/cartegory">
+                Category
               </a>
             </li>
           </ul>
