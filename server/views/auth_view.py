@@ -5,9 +5,8 @@ from models import db, Customer, TokenBlocklist
 
 auth_bp = Blueprint('auth_bp', __name__)
 
-@auth_bp.route('/token_blocklist')
+@auth_bp.route('/token_blocklist', methods=["GET"])
 def get_token_blocklist():
-    """Returns a list of all tokens in the blocklist"""
     tokens = TokenBlocklist.query.all()
     tokens_list = []
     if tokens:

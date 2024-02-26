@@ -1,42 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
+import { AuthContext } from "../context/AuthContext";
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const { addEmail } = useContext(AuthContext);
+  
+  const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetch("/login", {
+    if(userEmail == null || password == null) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    fetch("http://localhost:5000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ email: userEmail, password }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
           alert(data.error);
         } else {
+          addEmail(userEmail);
           alert(data.message);
-          navigate("/home");
+          navigate("/");
         }
       })
       .catch((error) => {
@@ -45,28 +42,18 @@ const LoginForm = () => {
   };
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{ height: "100vh", marginTop: "30px" }}>
       <Navbar />
       <div className="login-form-container">
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={handleUsernameChange}
-              required
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
               type="email"
               id="email"
-              value={email}
-              onChange={handleEmailChange}
+              value={userEmail}
+              onChange={(e)=>{setUserEmail(e.target.value)}}
               required
             />
           </div>
@@ -76,7 +63,7 @@ const LoginForm = () => {
               type="password"
               id="password"
               value={password}
-              onChange={handlePasswordChange}
+              onChange={(e)=>{setPassword(e.target.value)}}
               required
             />
           </div>

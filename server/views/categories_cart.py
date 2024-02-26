@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify, request
-from server.models import db, Category, Product, Cart
+from models import db, Category, Product, Cart
 from sqlalchemy.exc import IntegrityError
 
 categories_cart_bp = Blueprint('categories_cart', __name__)
 
-@categories_cart_bp.route('/categories', methods=['GET'])
+@categories_cart_bp.route('/all', methods=['GET'])
 def get_all_categories():
     categories = Category.query.all()
     categories_dict = [category.to_dict() for category in categories]

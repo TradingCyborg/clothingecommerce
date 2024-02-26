@@ -86,7 +86,7 @@ def checkout():
 
     if cart:
         cart.products = []
-        cart.total_price = 0
+        cart.total_price = 0\
 
         db.session.commit()
 

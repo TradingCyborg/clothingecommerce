@@ -22,7 +22,8 @@ export default function Landing() {
             textAlign: "center",
             backgroundImage: `url(${backgroundImageUrl})`,  // Add background image
             backgroundSize: "cover",  // Adjust as needed
-            backgroundPosition: "center"  // Adjust as needed
+            backgroundPosition: "center",  // Adjust as needed
+            marginTop: "30px"
         }}>
               <div style={{ color: "black" }}> {/* Set the text color to yellow */}
                 <h1>Welcome to Our FentyWear Store</h1>

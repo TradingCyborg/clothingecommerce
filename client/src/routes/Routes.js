@@ -32,11 +32,11 @@ import { Route, Switch } from 'react-router-dom';
 const Routes = () => {
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
+      {/* <Route exact path="/" component={Home} />
       <Route path="/products" component={Products} />
       <Route path="/cart" component={Cart} />
       <Route path="/category" component={Category} />
-      <Route component={Navbar} />
+      <Route component={Navbar} /> */}
     </Switch>
   );
 };
