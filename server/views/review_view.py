@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from models import db, Review, Customer, Product
+from server.models import db, Review, Customer, Product
 
 review_bp = Blueprint('review_bp', __name__)
 

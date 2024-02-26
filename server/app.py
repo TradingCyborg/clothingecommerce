@@ -28,12 +28,12 @@ CORS(app)
 jwt = JWTManager(app)
 
 # Import and register your blueprints
-from views.customer_view import customer_bp
 from views.product_view import products_bp 
 from views.order_view import order_bp
 from views.review_view import review_bp
 from views.auth_view import auth_bp
-
+from views.cart_view import cart_bp
+from views.categories_cart import categories_cart
 
 app.register_blueprint(auth_bp, url_prefix='')
 app.register_blueprint(review_bp, url_prefix='')

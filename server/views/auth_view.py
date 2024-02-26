@@ -1,7 +1,7 @@
 from flask import request, jsonify, Blueprint
 from flask_bcrypt import Bcrypt, check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
-from models import db, Customer, TokenBlocklist
+from server.models import db, Customer, TokenBlocklist
 
 auth_bp = Blueprint('auth_bp', __name__)
 
