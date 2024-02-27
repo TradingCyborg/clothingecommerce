@@ -2,6 +2,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+
 const Navbar = () => {
   const { logout, email } = useContext(AuthContext);
   const handleLogout = () => {
@@ -10,6 +11,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" style={{ height: "60px", padding: "10px"}}>
       <div className="container-fluid">
+
         <div className="navbar-brand" >
           <img 
           src="https://api.logo.com/api/v2/images?logo=logo_29bd977c-eb97-4e63-a6b2-4579403a7a01&u=1708550256&width=500&height=400&fit=contain&margins=100&format=webp&quality=60" 
@@ -18,6 +20,7 @@ const Navbar = () => {
           height="30"
          />
         </div>
+
         <button
           className="navbar-toggler"
           type="button"

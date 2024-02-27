@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Landing() {
+
    const backgroundImageUrl = "https://www.shutterstock.com/image-photo/clothing-store-retail-blurry-photo-600nw-2236736269.jpg"; // Replace with your image URL
   const navigate = useNavigate();
 
@@ -32,4 +33,3 @@ export default function Landing() {
             </div>
         </div>
     );
-}

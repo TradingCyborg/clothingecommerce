@@ -1,8 +1,11 @@
+
 import React, { useContext, useEffect, useState } from "react";
+
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
+
 import { AuthContext } from "../context/AuthContext";
 
 const LoginForm = () => {
@@ -25,12 +28,14 @@ const LoginForm = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: userEmail, password }),
+
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
           alert(data.error);
         } else {
+
           addEmail(userEmail);
           alert(data.message);
           navigate("/");
@@ -42,18 +47,27 @@ const LoginForm = () => {
   };
 
   return (
+
     <div style={{ height: "100vh", marginTop: "30px" }}>
       <Navbar />
       <div className="login-form-container">
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="username">Username:</label>
             <input
-              type="email"
-              id="email"
+              type="text"
+              id="username"
+              value={username}
+              onChange={handleUsernameChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            
               value={userEmail}
               onChange={(e)=>{setUserEmail(e.target.value)}}
+
               required
             />
           </div>
@@ -63,7 +77,9 @@ const LoginForm = () => {
               type="password"
               id="password"
               value={password}
+
               onChange={(e)=>{setPassword(e.target.value)}}
+
               required
             />
           </div>

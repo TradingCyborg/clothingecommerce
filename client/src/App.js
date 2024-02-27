@@ -1,4 +1,6 @@
+
 import React, { useContext } from 'react';
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './layout/Navbar';
 import Footer from './layout/Footer';
@@ -8,10 +10,12 @@ import SignupForm from './components/SignupForm';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
 import { AuthContext } from './context/AuthContext';
 import Cart from './Pages/Cart';
 import Products from './Pages/Products';
 import Category from './Pages/Category';
+
 
 function App() {
   const { email } = useContext(AuthContext);
@@ -44,6 +48,7 @@ function App() {
 
         }
         
+
         <hr />
         <Footer />
       </div>
