@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -36,6 +36,15 @@ app.register_blueprint(review_bp, url_prefix='/reviews')
 app.register_blueprint(order_bp, url_prefix='/orders')
 app.register_blueprint(products_bp, url_prefix='/products')
 app.register_blueprint(cart_bp, url_prefix='/cart')
+
+
+@app.route('/', methods=['GET'])  
+def home():
+    # Create a welcome message as a response
+    response = make_response('<h1>Welcome to Fenty Wear!</h1>', 200)
+    return response
+
+
 
 # Run the app
 if __name__ == '__main__':
