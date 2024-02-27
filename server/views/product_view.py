@@ -43,6 +43,9 @@ def get_products():
                     #'reviews':[get_review(product.id)]
                 }
             )
+            
+    
+
         return {'products':products_list},200
     else:
         return {'message':'No product found 😞'}

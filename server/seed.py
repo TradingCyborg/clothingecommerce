@@ -1,134 +1,139 @@
-# from app import app
-# from models import db, Customer, Profile, Category, Product, Cart, Order, Review, cart_product_association
-# from datetime import datetime
+# seed.py
 
-# # Create sample data function
-# def create_sample_data():
-#     # Add categories
-#     category_names = ['CASUAL WEAR', 'SPORTS WEAR', 'FORMAL WEAR', 'FOOT WEAR', ]
-#     categories = {}
-
-#     for category_name in category_names:
-#         existing_category = Category.query.filter_by(name=category_name).first()
-#         if existing_category:
-#             categories[category_name] = existing_category
-#         else:
-#             new_category = Category(name=category_name)
-#             db.session.add(new_category)
-#             categories[category_name] = new_category
-
-#     db.session.commit()
-
-#     # Add products
-#     product1 = Product(name='Red T-Shirt', description='A simple red t-shirt', price=19.99, category=categories['CASUAL WEAR'], imageUrl='https://example.com/image1.jpg', size=1)
-#     product2 = Product(name='Blue Jeans', description='A pair of blue jeans', price=29.99, category=categories['CASUAL WEAR'], imageUrl='https://example.com/image2.jpg', size=2)
-#     db.session.add_all([product1, product2])
-
-#     # Add customers with profiles
-#     customer1 = Customer(name='Basil Itumbi', email='basilitumbi@example.com', phone='123456789', password='hashedpassword', address='1234 Main St')
-#     profile1 = Profile(bio='Fashion enthusiast', image_url='https://example.com/profile1.jpg', customer=customer1)
-#     db.session.add(profile1)
-
-#     customer2 = Customer(name='Jane karari', email='karari@example.com', phone='987654321', password='hashedpassword', address='5678 Elm St')
-#     profile2 = Profile(bio='Casual style lover', image_url='https://example.com/profile2.jpg', customer=customer2)
-#     db.session.add(profile2)
-
-#     db.session.commit()
-
-#     # Add carts
-#     cart1 = Cart(customer=customer1, total_price=49.98, delivery_address='1234 Main St')
-#     cart2 = Cart(customer=customer2, total_price=29.99, delivery_address='5678 Elm St')
-#     db.session.add_all([cart1, cart2])
-
-#     # Use the association table to associate products with carts
-#     cart_product_association.insert().values(cart_id=cart1.id, product_id=product1.id)
-#     cart_product_association.insert().values(cart_id=cart1.id, product_id=product2.id)
-#     cart_product_association.insert().values(cart_id=cart2.id, product_id=product2.id)
-
-#     # Commit changes
-#     db.session.commit()
-
-#     # Add orders
-#     order1 = Order(orderdate=datetime.utcnow(), price=49.98, status='pending', customer=customer1, product=product1)
-#     order2 = Order(orderdate=datetime.utcnow(), price=29.99, status='pending', customer=customer2, product=product2)
-#     db.session.add_all([order1, order2])
-
-#     # Add reviews
-#     review1 = Review(rating=4, comment='Good product', date=datetime.utcnow(), customer=customer1, product=product1)
-#     review2 = Review(rating=5, comment='Great product', date=datetime.utcnow(), customer=customer2, product=product2)
-#     db.session.add_all([review1, review2])
-
-#     # Commit changes
-#     db.session.commit()
-
-# if _name_ == '_main_':
-#     with app.app_context():
-#         create_sample_data()
-#         print('Sample data added successfully!')
+from faker import Faker
+from models import db, Customer, Profile, Category, Product, Cart, Order, Review, CartProductAssociation
 from app import app
-from models import db, Customer, Profile, Category, Product, Cart, Order, Review, cart_product_association
 from datetime import datetime
 
-# Create sample data function
-def create_sample_data():
-    # Add categories
-    category_names = ['CASUAL WEAR', 'SPORTS WEAR', 'FORMAL WEAR', 'FOOT WEAR', ]
-    categories = {}
+fake = Faker()
 
-    for category_name in category_names:
+# Start the application context to make sure db operations are done within it
+app.app_context().push()
+
+try:
+    # Perform database operations
+    # Seed customers
+    for _ in range(10):
+        customer = Customer(
+            name=fake.name(),
+            email=fake.email(),
+            phone=fake.phone_number(),
+            password=fake.password(),
+            address=fake.address()
+        )
+        db.session.add(customer)
+        profile = Profile(
+            bio=fake.sentence(),
+            image_url=fake.image_url(),
+            customer_id=customer.id
+        )
+        db.session.add(profile)
+
+    # Commit the changes for customers and profiles
+    db.session.commit()
+    print("Customers and Profiles seeded successfully!")
+
+except Exception as e:
+    print(f"Error occurred during seeding for customers and profiles: {e}")
+
+try:
+    # Seed categories
+    categories = ["Electronics", "Clothing", "Books", "Toys", "Beauty"]
+    for category_name in categories:
+        # Check if the category exists
         existing_category = Category.query.filter_by(name=category_name).first()
-        if existing_category:
-            categories[category_name] = existing_category
-        else:
-            new_category = Category(name=category_name)
-            db.session.add(new_category)
-            categories[category_name] = new_category
+        if existing_category is None:
+            # If it doesn't exist, create it
+            category = Category(name=category_name)
+            db.session.add(category)
 
+    # Commit the changes for categories
     db.session.commit()
+    print("Categories seeded successfully!")
 
-    # Add products
-    product1 = Product(name='Red T-Shirt', description='A simple red t-shirt', price=19.99, category=categories['CASUAL WEAR'], imageUrl='https://example.com/image1.jpg', size=1)
-    product2 = Product(name='Blue Jeans', description='A pair of blue jeans', price=29.99, category=categories['CASUAL WEAR'], imageUrl='https://example.com/image2.jpg', size=2)
-    db.session.add_all([product1, product2])
+except Exception as e:
+    print(f"Error occurred during seeding for categories: {e}")
 
-    # Add customers with profiles
-    customer1 = Customer(name='Basil Itumbi', email='basilitumbi@example.com', phone='123456789', password='hashedpassword', address='1234 Main St')
-    profile1 = Profile(bio='Fashion enthusiast', image_url='https://example.com/profile1.jpg', customer=customer1)
-    db.session.add(profile1)
+try:
+    # Seed products
+    for _ in range(10):
+        product = Product(
+            name=fake.sentence(nb_words=4),
+            description=fake.text(),
+            price=fake.random_number(digits=4),
+            category_id=fake.random_element(elements=Category.query.all()).id,
+            imageUrl=fake.image_url(),
+            size=fake.random_number(digits=2)
+        )
+        db.session.add(product)
 
-    customer2 = Customer(name='Jane karari', email='karari@example.com', phone='987654321', password='hashedpassword', address='5678 Elm St')
-    profile2 = Profile(bio='Casual style lover', image_url='https://example.com/profile2.jpg', customer=customer2)
-    db.session.add(profile2)
-
+    # Commit the changes for products
     db.session.commit()
+    print("Products seeded successfully!")
 
-    # Add carts
-    cart1 = Cart(customer=customer1, total_price=49.98, delivery_address='1234 Main St')
-    cart2 = Cart(customer=customer2, total_price=29.99, delivery_address='5678 Elm St')
-    db.session.add_all([cart1, cart2])
+except Exception as e:
+    print(f"Error occurred during seeding for products: {e}")
 
-    # Use the association table to associate products with carts
-    cart_product_association.insert().values(cart_id=cart1.id, product_id=product1.id)
-    cart_product_association.insert().values(cart_id=cart1.id, product_id=product2.id)
-    cart_product_association.insert().values(cart_id=cart2.id, product_id=product2.id)
+try:
+    # Seed reviews
+    for _ in range(10):
+        review = Review(
+            rating=fake.random_number(digits=1),
+            comment=fake.sentence(),
+            date=fake.date_time_this_year(),
+            customer_id=fake.random_element(elements=Customer.query.all()).id,
+            product_id=fake.random_element(elements=Product.query.all()).id
+        )
+        db.session.add(review)
 
-    # Commit changes
+    # Commit the changes for reviews
     db.session.commit()
+    print("Reviews seeded successfully!")
 
-    # Add orders
-    order1 = Order(orderdate=datetime.utcnow(), price=49.98, status='pending', customer=customer1, product=product1)
-    order2 = Order(orderdate=datetime.utcnow(), price=29.99, status='pending', customer=customer2, product=product2)
-    db.session.add_all([order1, order2])
+except Exception as e:
+    print(f"Error occurred during seeding for reviews: {e}")
 
-    # Add reviews
-    review1 = Review(rating=4, comment='Good product', date=datetime.utcnow(), customer=customer1, product=product1)
-    review2 = Review(rating=5, comment='Great product', date=datetime.utcnow(), customer=customer2, product=product2)
-    db.session.add_all([review1, review2])
+try:
+    # Seed carts
+    for customer in Customer.query.all():
+        cart = Cart(
+            total_price=fake.random_number(digits=5),
+            delivery_address=fake.address(),
+            customer_id=customer.id
+        )
+        db.session.add(cart)
 
-    # Commit changes
+        # Add 3 products to each cart
+        for _ in range(3):
+            cart_product_association = CartProductAssociation(
+                cart_id=cart.id,
+                product_id=fake.random_element(elements=Product.query.all()).id
+            )
+            db.session.add(cart_product_association)
+
+    # Commit the changes for carts and cart-product associations
     db.session.commit()
+    print("Carts and Cart-product associations seeded successfully!")
 
-if _name_ == '_main_':
-    with app.app_context():
-        create_sample_data()
-        print('Sample data added successfully!')
+except Exception as e:
+    print(f"Error occurred during seeding for carts and cart-product associations: {e}")
+
+try:
+    # Seed orders
+    for _ in range(10):
+        order = Order(
+            orderdate=fake.date_time_this_year(),
+            price=fake.random_number(digits=4),
+            status="Shipped",
+            customer_id=fake.random_element(elements=Customer.query.all()).id,
+            product_id=fake.random_element(elements=Product.query.all()).id
+        )
+        db.session.add(order)
+
+    # Commit the changes for orders
+    db.session.commit()
+    print("Orders seeded successfully!")
+
+except Exception as e:
+    print(f"Error occurred during seeding for orders: {e}")
+
