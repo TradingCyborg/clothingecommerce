@@ -1,34 +1,33 @@
-import React, { useState } from "react";
+
+import React, { useContext, useState } from "react";
+=======
+
 import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
 import "../App.css";
 
+import { AuthContext } from "../context/AuthContext";
+
 const SignupForm = () => {
+
+  const { addEmail } = useContext(AuthContext);
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const navigate = useNavigate();
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
   
-    fetch("/signup", {
+    fetch("http://localhost:5000/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ name: username, email,  password, phone, address }),
+
     })
       .then((response) => response.json())
       .then((data) => {
@@ -36,7 +35,10 @@ const SignupForm = () => {
           alert(data.error);
         } else {
           alert(data.message);
-          navigate("/home");
+
+          addEmail(email);
+          navigate("/");
+
         }
       })
       .catch((error) => {
@@ -47,7 +49,9 @@ const SignupForm = () => {
   return (
     <div>
       <Navbar />
-      <div className="signup-form-container" style={{ height: "100vh" }}>
+
+      <div className="signup-form-container" style={{ height: "100vh", marginTop: "35px" }}>
+
         <h1>Register</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -56,7 +60,9 @@ const SignupForm = () => {
               type="text"
               id="username"
               value={username}
-              onChange={handleUsernameChange}
+
+              onChange={(e)=>setUsername(e.target.value)}
+
               required
             />
           </div>
@@ -65,8 +71,27 @@ const SignupForm = () => {
             <input
               type="email"
               id="email"
-              value={email}
-              onChange={handleEmailChange}
+
+              onChange={(e)=>setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Phone:</label>
+            <input
+              type="text"
+              id="phone"
+              onChange={(e)=>setPhone(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Address:</label>
+            <input
+              type="text"
+              id="address"
+              onChange={(e)=>setAddress(e.target.value)}
+
               required
             />
           </div>
@@ -75,8 +100,9 @@ const SignupForm = () => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={handlePasswordChange}
+
+              onChange={(e)=> setPassword(e.target.value)}
+
               required
             />
           </div>

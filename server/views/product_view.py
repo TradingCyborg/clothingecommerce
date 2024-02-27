@@ -37,10 +37,10 @@ def get_products():
                     'name':product.name,
                     'price':product.price,
                     'description':product.description,
-                    'category':product.category,
+                    #'category':product.category,
                     'size':product.size,
                     'image_url':product.imageUrl,
-                    'reviews':[get_review(product.id)]
+                    #'reviews':[get_review(product.id)]
                 }
             )
         return {'products':products_list},200

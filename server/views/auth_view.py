@@ -5,7 +5,22 @@ from models import db, Customer, TokenBlocklist
 
 auth_bp = Blueprint('auth_bp', __name__)
 
-# routes
+@auth_bp.route('/token_blocklist', methods=["GET"])
+def get_token_blocklist():
+    tokens = TokenBlocklist.query.all()
+    tokens_list = []
+    if tokens:
+        for token in tokens:
+            tokens_list.append({
+                "id": token.id,
+                'token': token.token,
+                'created_at': token.created_at,
+            })
+        return jsonify(tokens_list), 200
+    else:
+        return jsonify({'message': "No tokens found in the blocklist😞"}), 200
+    
+    
 # add customer
 @auth_bp.route("/login", methods=["POST"])
 def login():
