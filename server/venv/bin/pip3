@@ -1,4 +1,4 @@
-#!/home/clair_karanja/clothingecommerce/clothingecommerce/server/venv/bin/python3
+#!/home/clair_karanja/clothingecommerce/server/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
