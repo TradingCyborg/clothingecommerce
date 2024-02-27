@@ -7,6 +7,7 @@ const Products = () => {
     fetch("http://localhost:5000/products")
     .then((response) => response.json())
     .then((data) => {
+      console.log(data.products)
         setProducts(data.products);
       })
     .catch((error) => {
@@ -36,9 +37,15 @@ const Products = () => {
               width:"20%",
               padding:"5px"
             }}>
+              <img src={product.imageUrl} width={"100px"}/>
               <h2>{product.name}</h2>
               <p>{product.description}</p>
-              <p>{product.price}</p>
+              <p>Ksh. 
+                
+                
+                
+                
+                {product.price}</p>
             </div>
           ))
         }
