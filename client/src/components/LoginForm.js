@@ -1,22 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
-import "../App.css";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
 import { AuthContext } from "../context/AuthContext";
+import "../App.css";
 
 const LoginForm = () => {
   const { addEmail } = useContext(AuthContext);
-  
+
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if(userEmail == null || password == null) {
+    if (userEmail === "" || password === "") {
       alert("Please fill in all fields");
       return;
     }
@@ -48,12 +47,12 @@ const LoginForm = () => {
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="username">Username:</label>
             <input
-              type="email"
-              id="email"
+              type="text"
+              id="username"
               value={userEmail}
-              onChange={(e)=>{setUserEmail(e.target.value)}}
+              onChange={(e) => setUserEmail(e.target.value)}
               required
             />
           </div>
@@ -63,17 +62,16 @@ const LoginForm = () => {
               type="password"
               id="password"
               value={password}
-              onChange={(e)=>{setPassword(e.target.value)}}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
           <button type="submit">Login</button>
         </form>
         <p>
-        Don't have an account? <a href="/signup">Sign up here</a>.
-      </p>
+          Don't have an account? <a href="/signup">Sign up here</a>.
+        </p>
       </div>
-     
     </div>
   );
 };

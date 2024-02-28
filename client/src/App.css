@@ -197,3 +197,26 @@
 .signup-form-container p a:hover {
   color: #c0392b;
 }
+
+
+/* Add this to your CSS file or include it in your existing styles */
+
+.authButton {
+  background-color: #3498db; /* Blue */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 50%; /* Circular */
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.authButton:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+  transform: scale(1.05); /* Scale up on hover */
+}
