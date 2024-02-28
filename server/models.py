@@ -1,11 +1,9 @@
-<<<<<<< HEAD
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import timedelta
 from sqlalchemy_serializer import SerializerMixin
 
-=======
 # models.py
 
 from flask_sqlalchemy import SQLAlchemy
@@ -14,7 +12,6 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import validates
 from sqlalchemy.orm import relationship
->>>>>>> c1956225c43407abd84813f4f93d2b5fd7f0b7ca
 
 db = SQLAlchemy()
 

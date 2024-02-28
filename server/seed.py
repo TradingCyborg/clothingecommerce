@@ -78,7 +78,6 @@ from datetime import datetime
 # Create sample data function
 def create_sample_data():
     # Add categories
-<<<<<<< HEAD
     category_names = ['CASUAL WEAR', 'SPORTS WEAR', 'FORMAL WEAR', 'FOOT WEAR', ]
     categories = {}
 
@@ -105,7 +104,6 @@ def create_sample_data():
 
     customer2 = Customer(name='Jane karari', email='karari@example.com', phone='987654321', password='hashedpassword', address='5678 Elm St')
     profile2 = Profile(bio='Casual style lover', image_url='https://example.com/profile2.jpg', customer=customer2)
-=======
     category_names = ['CASUAL WEAR', 'SPORTS WEAR', 'FORMAL WEAR', 'FOOT WEAR']
     categories = {}
 
@@ -134,7 +132,6 @@ def create_sample_data():
 
     customer2 = Customer(name='Jane karari', email='karari@example.com', phone='987654321', password='hashedpassword', address='5678 Elm St')
     profile2 = UserProfile(bio='Casual style lover', avatar_url='https://example.com/profile2.jpg', user=customer2)
->>>>>>> c1956225c43407abd84813f4f93d2b5fd7f0b7ca
     db.session.add(profile2)
 
     db.session.commit()
