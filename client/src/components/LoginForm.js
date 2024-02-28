@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import "../App.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
 import { AuthContext } from "../context/AuthContext";
-import "../App.css";
 
 const LoginForm = () => {
   const { addEmail } = useContext(AuthContext);

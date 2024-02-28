@@ -15,14 +15,15 @@ const Navbar = () => {
       style={{ height: "120px", padding: "10px" }}
     >
       <div className="container-fluid">
-        <div className="navbar-brand" style={{ marginBottom: "20px" }}>
+        <div className="navbar-brand">
           <img
             src="https://api.logo.com/api/v2/images?logo=logo_29bd977c-eb97-4e63-a6b2-4579403a7a01&u=1708550256&width=500&height=400&fit=contain&margins=100&format=webp&quality=60"
             alt="logo"
-            width="120"
-            height="120"
+            width="30"
+            height="30"
           />
         </div>
+
         <button
           className="navbar-toggler"
           type="button"
@@ -47,8 +48,8 @@ const Navbar = () => {
                 style={{
                   fontWeight: "bold",
                   color: "black",
-                  fontSize: "25px", // Adjust the font size as needed
-                  textDecoration: "none", // Remove default underline
+                  fontSize: "25px",
+                  textDecoration: "none",
                 }}
               >
                 Home
@@ -61,8 +62,8 @@ const Navbar = () => {
                 style={{
                   fontWeight: "bold",
                   color: "black",
-                  fontSize: "25px", // Adjust the font size as needed
-                  textDecoration: "none", // Remove default underline
+                  fontSize: "25px",
+                  textDecoration: "none",
                 }}
               >
                 Products
@@ -75,8 +76,8 @@ const Navbar = () => {
                 style={{
                   fontWeight: "bold",
                   color: "black",
-                  fontSize: "25px", // Adjust the font size as needed
-                  textDecoration: "none", // Remove default underline
+                  fontSize: "25px",
+                  textDecoration: "none",
                 }}
               >
                 Cart
@@ -89,27 +90,22 @@ const Navbar = () => {
                 style={{
                   fontWeight: "bold",
                   color: "black",
-                  fontSize: "25px", // Adjust the font size as needed
-                  textDecoration: "none", // Remove default underline
+                  fontSize: "25px",
+                  textDecoration: "none",
                 }}
               >
                 Category
               </Link>
             </li>
             {email !== null ? (
-              <li
-                className="nav-item"
-                onClick={() => {
-                  handleLogout();
-                }}
-              >
+              <li className="nav-item" onClick={handleLogout}>
                 <button
                   className="nav-link"
                   style={{
                     color: "black",
                     fontWeight: "bold",
-                    fontSize: "25px", // Adjust the font size as needed
-                    textDecoration: "none", // Remove default underline
+                    fontSize: "25px",
+                    textDecoration: "none",
                   }}
                 >
                   Logout
@@ -124,7 +120,7 @@ const Navbar = () => {
                     fontWeight: "bold",
                     color: "black",
                     fontSize: "25px",
-                    textDecoration: "none", // Remove default underline
+                    textDecoration: "none",
                   }}
                 >
                   Login
