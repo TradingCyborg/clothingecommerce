@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+=======
+import React from "react";
+>>>>>>> c1956225c43407abd84813f4f93d2b5fd7f0b7ca
 
 const Navbar = () => {
   const { logout, email } = useContext(AuthContext);
@@ -11,6 +15,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" style={{ height: "60px", padding: "10px"}}>
       <div className="container-fluid">
+<<<<<<< HEAD
 
         <div className="navbar-brand" >
           <img 
@@ -21,6 +26,11 @@ const Navbar = () => {
          />
         </div>
 
+=======
+        <a className="navbar-brand" href="/">
+          <img src="https://api.logo.com/api/v2/images?logo=logo_29bd977c-eb97-4e63-a6b2-4579403a7a01&u=1708550256&width=500&height=400&fit=contain&margins=100&format=webp&quality=60" alt="Fenty wear logo" style={{ width: '100px', height: 'auto' }} />
+        </a>
+>>>>>>> c1956225c43407abd84813f4f93d2b5fd7f0b7ca
         <button
           className="navbar-toggler"
           type="button"
@@ -35,16 +45,24 @@ const Navbar = () => {
         <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+              <Link className="nav-link active" aria-current="page" to="/">
+                Home
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/products">Products</Link>
+              <Link className="nav-link" to="/products">
+                Products
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/cart">Cart</Link>
+              <Link className="nav-link" to="/cart">
+                Cart
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/category">Category</Link>
+              <Link className="nav-link" to="/category">
+                Category
+              </Link>
             </li>
             {  email !== null ?
              <li className="nav-item" onClick={()=>{
