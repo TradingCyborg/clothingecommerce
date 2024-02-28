@@ -1,0 +1,38 @@
+/* Landing.css */
+.Landing {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Adjust width to cover the full container */
+  height: 100%;
+  overflow: hidden;
+}
+
+.background-image {
+  width: 100%; /* Set the width of the image to cover the container */
+  object-fit: cover;
+  opacity: 0; /* Initially set opacity to 0 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: fadeInOut 10s linear infinite; /* Adjust the animation duration as needed */
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0; /* Fade out at the start and end of the animation */
+  }
+  50% {
+    opacity: 1; /* Fade in at the middle of the animation */
+  }
+}

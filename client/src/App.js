@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './layout/Navbar';
 import Footer from './layout/Footer';
-import Landing from './layout/Landing';
+import Landing from './Landing';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 
