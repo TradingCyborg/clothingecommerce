@@ -59,7 +59,7 @@ const SignupForm = () => {
               onChange={handleUsernameChange}
               required
             />
-          </div>
+          </div> 
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
