@@ -2,22 +2,22 @@ from flask import Blueprint, jsonify, request
 from models import db, Category, Product, Cart
 from sqlalchemy.exc import IntegrityError
 
-categories_bp = Blueprint('categories_bp', __name__)
+categories_cart_bp = Blueprint('categories_cart', __name__)
 
-@categories_bp.route('/all', methods=['GET'])
+@categories_cart_bp.route('/all', methods=['GET'])
 def get_all_categories():
     categories = Category.query.all()
     categories_dict = [category.to_dict() for category in categories]
     return jsonify({'categories': categories_dict}), 200
 
-@categories_bp.route('/categories/<int:category_id>', methods=['GET'])
+@categories_cart_bp.route('/categories/<int:category_id>', methods=['GET'])
 def get_category(category_id):
     category = Category.query.get(category_id)
     if not category:
         return jsonify({'message': 'Category not found'}), 404
     return jsonify({'category': category.to_dict()}), 200
 
-@categories_bp.route('/categories', methods=['POST'])
+@categories_cart_bp.route('/categories', methods=['POST'])
 def create_category():
     data = request.get_json()
     name = data.get('name')
@@ -32,7 +32,7 @@ def create_category():
         return jsonify({'message': 'Category name must be unique'}), 400
     return jsonify({'category': category.to_dict()}), 201
 
-@categories_bp.route('/categories/<int:category_id>', methods=['DELETE'])
+@categories_cart_bp.route('/categories/<int:category_id>', methods=['DELETE'])
 def delete_category(category_id):
     category = Category.query.get(category_id)
     if not category:
@@ -41,7 +41,7 @@ def delete_category(category_id):
     db.session.commit()
     return jsonify({'message': 'Category deleted successfully'}), 200
 
-@categories_bp.route('/categories/<int:category_id>/products', methods=['GET'])
+@categories_cart_bp.route('/categories/<int:category_id>/products', methods=['GET'])
 def get_products_by_category(category_id):
     category = Category.query.get(category_id)
     if not category:
@@ -50,7 +50,7 @@ def get_products_by_category(category_id):
     products_dict = [product.to_dict() for product in products]
     return jsonify({'products': products_dict}), 200
 
-@categories_bp.route('/categories/<int:category_id>/products', methods=['POST'])
+@categories_cart_bp.route('/categories/<int:category_id>/products', methods=['POST'])
 def create_product_in_category(category_id):
     data = request.get_json()
     name = data.get('name')
@@ -68,7 +68,7 @@ def create_product_in_category(category_id):
     db.session.commit()
     return jsonify({'product': product.to_dict()}), 201
 
-@categories_bp.route('/categories/<int:category_id>/products/<int:product_id>', methods=['DELETE'])
+@categories_cart_bp.route('/categories/<int:category_id>/products/<int:product_id>', methods=['DELETE'])
 def delete_product_in_category(category_id, product_id):
     category = Category.query.get(category_id)
     if not category:
@@ -80,7 +80,7 @@ def delete_product_in_category(category_id, product_id):
     db.session.commit()
     return jsonify({'message': 'Product deleted successfully'}), 200
 
-@categories_bp.route('/categories/<int:category_id>/carts', methods=['GET'])
+@categories_cart_bp.route('/categories/<int:category_id>/carts', methods=['GET'])
 def get_carts_in_category(category_id):
     category = Category.query.get(category_id)
     if not category:
