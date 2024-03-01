@@ -1,23 +1,29 @@
-
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+
 const Navbar = () => {
   const { logout, email } = useContext(AuthContext);
+
   const handleLogout = () => {
     logout();
-  }
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" style={{ height: "60px", padding: "10px"}}>
+    <nav
+      className="navbar navbar-expand-lg navbar-light bg-lightbrown fixed-top"
+      style={{ height: "120px", padding: "10px" }}
+    >
       <div className="container-fluid">
-        <div className="navbar-brand" >
-          <img 
-          src="https://api.logo.com/api/v2/images?logo=logo_29bd977c-eb97-4e63-a6b2-4579403a7a01&u=1708550256&width=500&height=400&fit=contain&margins=100&format=webp&quality=60" 
-          alt="logo" 
-          width="30" 
-          height="30"
-         />
+        <div className="navbar-brand">
+          <img
+            src="https://api.logo.com/api/v2/images?logo=logo_29bd977c-eb97-4e63-a6b2-4579403a7a01&u=1708550256&width=500&height=400&fit=contain&margins=100&format=webp&quality=60"
+            alt="logo"
+            width="30"
+            height="30"
+          />
         </div>
+
         <button
           className="navbar-toggler"
           type="button"
@@ -29,34 +35,99 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <div
+          className="collapse navbar-collapse justify-content-end"
+          id="navbarSupportedContent"
+        >
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+              <Link
+                className="nav-link active"
+                aria-current="page"
+                to="/"
+                style={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "25px",
+                  textDecoration: "none",
+                }}
+              >
+                Home
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/products">Products</Link>
+              <Link
+                className="nav-link"
+                to="/products"
+                style={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "25px",
+                  textDecoration: "none",
+                }}
+              >
+                Products
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/cart">Cart</Link>
+              <Link
+                className="nav-link"
+                to="/cart"
+                style={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "25px",
+                  textDecoration: "none",
+                }}
+              >
+                Cart
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/category">Category</Link>
+              <Link
+                className="nav-link"
+                to="/category"
+                style={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "25px",
+                  textDecoration: "none",
+                }}
+              >
+                Category
+              </Link>
             </li>
-            {  email !== null ?
-             <li className="nav-item" onClick={()=>{
-              handleLogout();
-            }}>
-              <button className="nav-link" style={{ color: "red"}}>Logout</button>
-            </li> 
-            :
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
-            }
-            
+            {email !== null ? (
+              <li className="nav-item" onClick={handleLogout}>
+                <button
+                  className="nav-link"
+                  style={{
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "25px",
+                    textDecoration: "none",
+                  }}
+                >
+                  Logout
+                </button>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link
+                  className="nav-link"
+                  to="/login"
+                  style={{
+                    fontWeight: "bold",
+                    color: "black",
+                    fontSize: "25px",
+                    textDecoration: "none",
+                  }}
+                >
+                  Login
+                </Link>
+              </li>
+            )}
           </ul>
-          
         </div>
       </div>
     </nav>

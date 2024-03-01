@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import "../App.css";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
@@ -7,16 +6,20 @@ import { AuthContext } from "../context/AuthContext";
 
 const LoginForm = () => {
   const { addEmail } = useContext(AuthContext);
-  
+
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState(""); // Added username state
   const navigate = useNavigate();
 
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if(userEmail == null || password == null) {
+    if (userEmail == null || password == null || username == null) {
       alert("Please fill in all fields");
       return;
     }
@@ -24,7 +27,7 @@ const LoginForm = () => {
     fetch("http://localhost:5000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: userEmail, password }),
+      body: JSON.stringify({ email: userEmail, password, username }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -48,12 +51,24 @@ const LoginForm = () => {
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="username">Username:</label>
             <input
-              type="email"
-              id="email"
+              type="text"
+              id="username"
+              value={username}
+              onChange={handleUsernameChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="userEmail">Email:</label>
+            <input
+              type="text"
+              id="userEmail"
               value={userEmail}
-              onChange={(e)=>{setUserEmail(e.target.value)}}
+              onChange={(e) => {
+                setUserEmail(e.target.value);
+              }}
               required
             />
           </div>
@@ -63,17 +78,19 @@ const LoginForm = () => {
               type="password"
               id="password"
               value={password}
-              onChange={(e)=>{setPassword(e.target.value)}}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               required
             />
           </div>
           <button type="submit">Login</button>
         </form>
         <p>
-        Don't have an account? <a href="/signup">Sign up here</a>.
-      </p>
+          Don't have an account? <a href="/signup">Sign up here</a>.
+        </p>
       </div>
-     
+      <Footer />
     </div>
   );
 };
