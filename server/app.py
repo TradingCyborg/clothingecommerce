@@ -1,24 +1,28 @@
+import datetime
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from flask_migrate import Migrate   
+from flask_migrate import Migrate
+import jwt   
+from models import User, UserProfile, Category, Product, Review, Order, Cart,db
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fentywear.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key_here'  
-db = SQLAlchemy(app)
+db.init_app(app)
+
+
+
 migrate = Migrate(app, db)
 CORS(app)
 
 
-
-from models import User, UserProfile, Category, Product, Review, Order, Cart
 # JWT Configuration
 def encode_auth_token(user_id):
     try:
         payload = {
-            'exp': datetime.utcnow() + timedelta(days=1),
+            'exp': datetime.utcnow() + datetime.timedelta(days=1),
             'iat': datetime.utcnow(),
             'sub': user_id
         }
@@ -183,8 +187,3 @@ def get_product_reviews(product_id):
 
 # Other CRUD operations can be added as needed...
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        print("Tables created successfully!")  # Add this line
-    app.run(debug=True)
